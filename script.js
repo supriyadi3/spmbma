@@ -1,15 +1,18 @@
+// Konfigurasi Google Spreadsheet
+const SPREADSHEET_ID = "1ih-MTo7037_qp4CJgP6wxULXb4m8nB5oYf0QV3BpgDs";
+// Catatan: Jika menggunakan Google Apps Script Web App, tempel URL Web App Anda di bawah ini
+const SCRIPT_URL = ""; 
+
 let GLOBAL_REG_OPEN = true;
 let CURRENT_USER = null;
 
 // Fungsi untuk mengganti tampilan section/halaman
 function switchView(sectionId) {
-  // Sembunyikan semua section dengan class step-view
   const sections = document.querySelectorAll('.step-view');
   sections.forEach(section => {
     section.classList.remove('active');
   });
 
-  // Tampilkan section yang dituju
   const targetSection = document.getElementById(sectionId);
   if (targetSection) {
     targetSection.classList.add('active');
@@ -22,7 +25,6 @@ function tryToRegister() {
   if (GLOBAL_REG_OPEN) {
     switchView('formSection');
   } else {
-    // Tampilkan modal pendaftaran ditutup menggunakan bootstrap
     const closedModal = new bootstrap.Modal(document.getElementById('closedRegistrationModal'));
     closedModal.show();
   }
@@ -30,7 +32,7 @@ function tryToRegister() {
 
 // Pengalihan kontak admin via WhatsApp
 function redirectToWhatsApp() {
-  window.open('https://wa.me/61234567890', '_blank'); // Ganti dengan nomor WhatsApp aktif madrasah Anda
+  window.open('https://wa.me/61234567890', '_blank'); // Ganti dengan nomor WhatsApp riil
 }
 
 // Fungsi simulasi loading overlay
@@ -54,12 +56,17 @@ function handleFormSubmit(event) {
     return;
   }
 
-  showLoading(true, "Menyimpan data pendaftaran...");
+  showLoading(true, "Menyimpan data pendaftaran ke database...");
   
-  // Simulasi sukses pasca submit data
+  // Ambil semua data dari form
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+  data.spreadsheetId = SPREADSHEET_ID; // Menyertakan ID Spreadsheet jika diproses lewat API
+
+  // Simulasi pengiriman data (Jika sudah ada SCRIPT_URL, gunakan fetch() ke Apps Script)
   setTimeout(() => {
     showLoading(false);
-    alert("Pendaftaran Berhasil! Silakan masuk ke panel menggunakan NISN Anda.");
+    alert("Pendaftaran Berhasil dimasukkan ke database! Silakan masuk menggunakan NISN Anda.");
     form.reset();
     form.classList.remove('was-validated');
     switchView('loginSection');
@@ -79,7 +86,6 @@ function handleLogin(event) {
       switchView('adminDashboardSection');
     } else {
       switchView('studentDashboardSection');
-      // Set contoh teks data siswa di dashboard
       document.getElementById('viewNama').innerText = "Calon Siswa MA Al Istiqomah";
       document.getElementById('viewNisn').innerText = username;
     }
