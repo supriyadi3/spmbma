@@ -1,7 +1,7 @@
 // ==========================================
 // KONFIGURASI SISTEM SPMB MA AL ISTIQOMAH
 // ==========================================
-const SPREADSHEET_ID = '1ih-MTo7037_qp4CJgP6wxULXb4m8nB5oYf0QV3BpgDs';
+const SPREADSHEET_ID = '1v2c-Un0RSUxSrR7cnIqzEnRU1HwzKr73tXxOwV7--NY';
 const FOLDER_KK_ID = '1RoIsMqYobFgQYEKu7Ay4cDK7v7MqoOWX';
 const FOLDER_IJAZAH_ID = '1i2W66OG5WPZTrJe2KttGN2iSV2ZmIUW1';
 const CONFIG_SHEET_NAME = 'Config';
